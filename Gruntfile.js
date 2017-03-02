@@ -7,14 +7,18 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     distFolder: 'dist',
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-      '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-      ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+    '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+    '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
+    '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;\n' +
+    '* Contributor(s): <%= _.pluck(pkg.contributors, "name").join(", ") %>;\n' +
+    ' Licensed <%= pkg.license %> */\n',
     // Task configuration.
     uglify: {
+      options: {
+        banner: '<%= banner %>',
+      },
       app: {
-        src: 'vanilla-notify.js',
+        src: '<%= distFolder %>/vanilla-notify.js',
         dest: '<%= distFolder %>/vanilla-notify.min.js'
       }
     },
@@ -31,33 +35,19 @@ module.exports = function(grunt) {
         unused: false,
         boss: true,
         eqnull: true,
-        browser: true
+        browser: true,
+        reporter: require('jshint-stylish') // use jshint-stylish to make our errors look and read good
       },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      lib_test: {
-        src: "*.js"
-      }
+      all: ['*.js']
     },
     sass: {
       options: {
-          sourceMap: true
+        sourceMap: true
       },
       dist: {
-          files: {
-              'dist/vanilla-notify.css': 'vanilla-notify.scss'
-          }
-      }
-    },
-    copy: {
-      scss: {
-        src: 'vanilla-notify.scss',
-        dest: 'dist/_vanilla-notify.scss'
-      },
-      js : {
-        src: 'vanilla-notify.js',
-        dest: 'dist/vanilla-notify.js'
+        files: {
+          '<%= distFolder %>/vanilla-notify.css': 'vanilla-notify.scss'
+        }
       }
     },
     watch: {
@@ -77,12 +67,24 @@ module.exports = function(grunt) {
       },
       styles: {
         files: '*.scss',
-        tasks: ['compass', 'copy'],
+        tasks: ['compass'],
         options: {
           spawn: false
         }
       }
-    }
+    },
+    browserify: {
+      all: {
+        src: 'vanilla-notify.js',
+        dest: '<%= distFolder %>/vanilla-notify.js',
+        options: {
+          browserifyOptions: {
+            standalone: 'vNotify'
+          },
+          banner: '<%= banner %>'
+        },
+      },
+    },
   });
 
   // These plugins provide necessary tasks.
@@ -90,9 +92,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-browserify');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'sass', 'copy', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'sass', 'browserify', 'uglify']);
 
 };
