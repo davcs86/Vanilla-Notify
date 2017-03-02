@@ -1,4 +1,4 @@
-/*! Notify - v0.0.2 - 2017-03-02
+/*! Notify - v0.0.2 - 2017-03-03
 * Copyright (c) 2017 Martin Laritz;
 * Contributor(s): David Castillo;
  Licensed MIT */
@@ -7,6 +7,7 @@
 module.exports = (function() {
 
   var positionOption = {
+    topCenter: 'topCenter',
     topLeft: 'topLeft',
     topRight: 'topRight',
     bottomLeft: 'bottomLeft',
@@ -15,7 +16,7 @@ module.exports = (function() {
   };
 
   var options = {
-    fadeInDuration: 1000,
+    fadeInDuration: 600,
     fadeOutDuration: 1000,
     fadeInterval: 50,
     visibleDuration: 5000,
@@ -68,18 +69,19 @@ module.exports = (function() {
   };
 
   var getPositionClass = function (option) {
-    switch (option) {
-    case positionOption.topLeft:
+    if (option === positionOption.topCenter) {
+      return 'vn-top-center';
+    } else if (option === positionOption.topLeft) {
       return 'vn-top-left';
-    case positionOption.topCenter:
-      return 'vn-top-left';
-    case positionOption.bottomRight:
+    } else if (option === positionOption.topRight) {
+      return 'vn-top-right';
+    } else if (option === positionOption.bottomRight) {
       return 'vn-bottom-right';
-    case positionOption.bottomLeft:
+    } else if (option === positionOption.bottomLeft) {
       return 'vn-bottom-left';
-    case positionOption.center:
+    } else if (option === positionOption.center) {
       return 'vn-center';
-    default:
+    } else {
       return 'vn-top-right';
     }
   };
@@ -118,7 +120,7 @@ module.exports = (function() {
   var fade = function (type, ms, el) {
     var isIn = type === 'in',
       opacity = isIn ? 0 : el.style.opacity || 1,
-      goal = isIn ? 0.8 : 0,
+      goal = isIn ? 0.95 : 0,
       gap = options.fadeInterval / ms;
 
     if (isIn) {
