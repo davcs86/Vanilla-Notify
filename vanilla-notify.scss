@@ -20,7 +20,7 @@ $vn-container-right: 10px !default;
 
 $vn-close-size: 15px !default;
 
-$vn-opacity: .75;
+$vn-opacity: .95;
 $vn-hover-opacity: 1;
 
 @mixin vn-border-radius($radius) {
@@ -70,6 +70,12 @@ $vn-hover-opacity: 1;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  &.vn-top-center {
+    transform: translate(-50%);
+    top: $vn-container-top;
+    left: 50%;
   }
 
   .vn-close {

@@ -16,6 +16,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); }
+  .vnotify-container.vn-top-center {
+    transform: translate(-50%);
+    top: 10px;
+    left: 50%; }
   .vnotify-container .vn-close {
     position: absolute;
     top: 5px;
@@ -49,9 +53,9 @@
   -ms-border-radius: 5px;
   border-radius: 5px;
   margin-bottom: 15px;
-  opacity: 0.75;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
-  filter: alpha(opacity=75); }
+  opacity: 0.95;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=95)";
+  filter: alpha(opacity=95); }
   .vnotify-item:hover {
     opacity: 1; }
 
