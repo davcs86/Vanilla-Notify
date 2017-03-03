@@ -13,7 +13,7 @@
     "email": "davcs86@gmail.com"
   }],
   "license": "MIT",
-  "main": "dist/vanilla-notify.js",
+  "main": "vanilla-notify.js",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-browserify": "^5.0.0",
