@@ -4,6 +4,10 @@
   "engines": {
     "node": ">= 0.10.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davcs86/Vanilla-Notify.git"
+  },
   "author": {
     "name": "Martin Laritz",
     "email": "martin@martinlaritz.com"
